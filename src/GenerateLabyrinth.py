@@ -25,7 +25,7 @@ class GenerateLabyrinth:
     """
 
     def __init__(self,
-                 logger: Optional[types.ModuleType] = None):
+                 logger=None):
         """
         Constructs a GenerateLabyrinth object.
 
@@ -48,6 +48,25 @@ class GenerateLabyrinth:
                          base_element_obstacle: Optional[str] = "#",
                          probability_find_obstacle: Optional[float] = 0.75,
                          ):
+        """
+        Create base labyrinth matrix
+
+        ...
+
+        Parameters
+        ----------
+            :param dimensions: dimensions of labyrinth matrix.
+            :type dimensions: list
+            :param base_element_not_obstacle: symbol to represent corridors.
+            :type base_element_not_obstacle: str
+            :param base_element_obstacle: symbol to represent obstacles.
+            :type base_element_obstacle: str
+            :param probability_find_obstacle: probability a cell it is an obstacle.
+            :type probability_find_obstacle: float
+            :return: a dictionary sorted with hotel data.
+            :rtype: dict
+        """
+
         dimension_x = dimensions[0]
         dimension_y = dimensions[1]
 

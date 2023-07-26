@@ -53,7 +53,7 @@ class Logger:
 
     def create_logger_file(self,
                            process_name: str,
-                           create_directory: Optional[bool] = False) -> types.ModuleType:
+                           create_directory: Optional[bool] = False):
         """
         Create a new log file.
 
@@ -66,7 +66,7 @@ class Logger:
             :param create_directory: If is necessary create a new directory or not.
             :type create_directory: bool
             :return: A logging file to write down logs info.
-            :rtype: types.ModuleType
+            :rtype: logging file
         """
         # create directory if it´s necessary
         if create_directory:
