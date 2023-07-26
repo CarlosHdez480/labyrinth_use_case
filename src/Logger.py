@@ -48,7 +48,7 @@ class Logger:
         sys.path.append(__COMMON_DIR)
 
         # filename log, to create log
-        self.__directory_log = __COMMON_DIR + "/logger"
+        self.__directory_log = __COMMON_DIR + "/logs"
         self.filename_log = self.__directory_log + f"/{log_name}.log"
 
     def create_logger_file(self,
