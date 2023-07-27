@@ -18,14 +18,8 @@ class MazeSolver:
 
            Methods
            -------
-               - question_matrix_dimensions(): Ask user by dimensions of matrix.
-               - question_probability_obstacles(): Ask user probability of obstacles.
-               - question_symbol_corridors(): Ask user symbol of corridors,
-               space without obstacles.
-               - question_symbol_obstacles(): Ask user symbol of obstacles,
-               space with obstacles.
-               - initial_question_user_method_input_labyrinth(): Ask user input data
-               of labyrinth matrix.
+               - find_min_movements(matrix: list, space_symbol: str,
+               obstacle_symbol: str): find minimum number of movements.
            """
 
     def __init__(self,
@@ -110,7 +104,6 @@ class MazeSolver:
                         orientation: str,
                         obstacle_symbol: str,
                         space_symbol: str):
-
         """Function to check if it is a valid move"""
         n_dimension, m_dimension = len(matrix), len(matrix[0])
 
@@ -124,6 +117,7 @@ class MazeSolver:
                 if matrix[i][j] == obstacle_symbol:
                     return False
 
+        # check orientation
         if orientation == "horizontal":
             return matrix[x_dimension + 1][y_dimension] == space_symbol \
                    and matrix[x_dimension + 1][y_dimension + 1] == space_symbol \
@@ -140,7 +134,7 @@ class MazeSolver:
     def __get_neighbours(self,
                          matrix: list,
                          x_dimension: int,
-                         y_refactor: int,
+                         y_dimension: int,
                          orientation: str,
                          obstacle_symbol: str,
                          space_symbol: str):
@@ -148,77 +142,77 @@ class MazeSolver:
         neighbours = []
         if self.__is_valid_move(matrix,
                                 x_dimension - 1,
-                                y_refactor,
+                                y_dimension,
                                 "horizontal",
                                 obstacle_symbol,
                                 space_symbol):
             neighbours.append((x_dimension - 1,
-                               y_refactor,
+                               y_dimension,
                                "horizontal"))
         if self.__is_valid_move(matrix,
                                 x_dimension + 1,
-                                y_refactor,
+                                y_dimension,
                                 "horizontal",
                                 obstacle_symbol,
                                 space_symbol):
             neighbours.append((x_dimension + 1,
-                               y_refactor,
+                               y_dimension,
                                "horizontal"))
         if self.__is_valid_move(matrix,
                                 x_dimension,
-                                y_refactor - 1,
+                                y_dimension - 1,
                                 "vertical",
                                 obstacle_symbol,
                                 space_symbol):
             neighbours.append((x_dimension,
-                               y_refactor - 1,
+                               y_dimension - 1,
                                "vertical"))
         if self.__is_valid_move(matrix,
                                 x_dimension,
-                                y_refactor + 1,
+                                y_dimension + 1,
                                 "vertical",
                                 obstacle_symbol,
                                 space_symbol):
             neighbours.append((x_dimension,
-                               y_refactor + 1,
+                               y_dimension + 1,
                                "vertical"))
 
         if orientation == "horizontal":
             if self.__is_valid_move(matrix,
                                     x_dimension,
-                                    y_refactor,
+                                    y_dimension,
                                     "vertical",
                                     obstacle_symbol,
                                     space_symbol):
                 neighbours.append((x_dimension,
-                                   y_refactor,
+                                   y_dimension,
                                    "vertical"))
             if self.__is_valid_move(matrix,
                                     x_dimension + 2,
-                                    y_refactor,
+                                    y_dimension,
                                     "vertical",
                                     obstacle_symbol,
                                     space_symbol):
                 neighbours.append((x_dimension + 2,
-                                   y_refactor,
+                                   y_dimension,
                                    "vertical"))
         elif orientation == "vertical":
             if self.__is_valid_move(matrix,
                                     x_dimension,
-                                    y_refactor,
+                                    y_dimension,
                                     "horizontal",
                                     obstacle_symbol,
                                     space_symbol):
                 neighbours.append((x_dimension,
-                                   y_refactor,
+                                   y_dimension,
                                    "horizontal"))
             if self.__is_valid_move(matrix,
                                     x_dimension,
-                                    y_refactor + 2,
+                                    y_dimension + 2,
                                     "horizontal",
                                     obstacle_symbol,
                                     space_symbol):
                 neighbours.append((x_dimension,
-                                   y_refactor + 2,
+                                   y_dimension + 2,
                                    "horizontal"))
         return neighbours

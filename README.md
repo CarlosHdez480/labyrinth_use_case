@@ -1,5 +1,3 @@
-
-
 ## Maze Solver
 
 
@@ -25,6 +23,13 @@ generate the image
 docker build -t <<image_name>> -f <<dockerfile_name>> .
 ```
 
+docker run 
+
+```docker
+docker run -ti <<image_name>>
+```
+
+It is necessary indicate -ti options due to the input data tha it is asked to the user.
 
 --
 

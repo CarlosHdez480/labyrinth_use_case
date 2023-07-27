@@ -1,5 +1,3 @@
-import time
-
 from src.decorators import Decorators
 from src.logger import Logger
 from src.read_data import ReadData

@@ -24,7 +24,7 @@ class ReadData:
     def __init__(self,
                  logger=None):
         """
-        Constructs a QuestionsUsers object.
+        Constructs a ReadData object.
 
         ...
 
@@ -61,9 +61,10 @@ class ReadData:
             :rtype: list
         """
         try:
-            with open(f"{self.__common_dir}/{folder}/" + filename) as f:
-                labyrinth_matrix = [x.rstrip("\n").split(" ") for x in f.readlines()]
-            f.close()
+            with open(f"{self.__common_dir}/{folder}/" + filename,
+                      encoding="utf-8") as file_opened:
+                labyrinth_matrix = [x.rstrip("\n").split(" ") for x in file_opened.readlines()]
+            file_opened.close()
             return labyrinth_matrix
         except Exception as err:
             self.logger.error(f"[read txt file] not possible open file, err: {err}")
