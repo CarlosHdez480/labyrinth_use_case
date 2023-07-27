@@ -1,6 +1,5 @@
 import random
 import copy
-import types
 
 from typing import Optional
 
@@ -20,8 +19,9 @@ class GenerateLabyrinth:
 
     Methods
     -------
-        - send_notification(err: Exception, file: str, severity: str, origin Optional[str] = "",
-        destination Optional[str] = "", reach Optional[str] = ""): Send notification to slack.
+        - create_labyrinth(dimensions: list, base_element_not_obstacle: Optional[str] = ".",
+        base_element_obstacle: Optional[str] = "#", probability_find_obstacle: Optional[float] = 0.75):
+        create labyrinth initial matrix.
     """
 
     def __init__(self,
@@ -42,6 +42,7 @@ class GenerateLabyrinth:
         self.logger = logger
 
     @Decorators.decorator_write_log_init_end_method
+    @Decorators.decorator_execution_time
     def create_labyrinth(self,
                          dimensions: list,
                          base_element_not_obstacle: Optional[str] = ".",
@@ -73,10 +74,12 @@ class GenerateLabyrinth:
         base_labyrinth_matrix = self.__create_base_labyrinth_matrix(dimension_x,
                                                                     dimension_y,
                                                                     base_element_not_obstacle)
+
         base_labyrinth_matrix_with_obstacles = self.__create_obstacles_inside_base_labyrinth_matrix(
             base_labyrinth_matrix,
+            base_element_obstacle,
             probability_find_obstacle,
-            base_element_obstacle)
+        )
         return base_labyrinth_matrix_with_obstacles
 
     @Decorators.decorator_write_log_init_end_method
@@ -95,8 +98,8 @@ class GenerateLabyrinth:
     @Decorators.decorator_write_log_init_end_method
     def __create_obstacles_inside_base_labyrinth_matrix(self,
                                                         base_labyrinth_matrix: list,
+                                                        base_element_obstacle: str,
                                                         probability_find_obstacle: float,
-                                                        base_element_obstacle: str
                                                         ) -> list:
 
         base_labyrinth_matrix_with_obstacles = copy.deepcopy(base_labyrinth_matrix[:][:])
