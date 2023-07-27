@@ -1,6 +1,6 @@
 import pytest
 
-from src.GenerateLabyrinth import GenerateLabyrinth
+from src.generate_labyrinth import GenerateLabyrinth
 
 
 @pytest.fixture

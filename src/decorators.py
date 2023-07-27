@@ -1,10 +1,12 @@
+"""module with decorators"""
+
 import time
 import types
 
-from src.Logger import Logger
 from typing import Optional
-
 from functools import wraps
+
+from src.logger import Logger
 
 
 class Decorators:
@@ -41,6 +43,7 @@ class Decorators:
 
     @staticmethod
     def decorator_execution_time(method):
+        """Decorator write execution time, function lasting"""
         wraps(method)
 
         def method_wrapped(self,
@@ -52,17 +55,17 @@ class Decorators:
             method_result = method(self,
                                    *args,
                                    **kwargs)
+            time_stamp = time.time() - start_time
             try:
-                self.logger.info("[{}] execution time --- {} seconds ---".format(name_method,
-                                                                                 (time.time() - start_time)))
+                self.logger.info(f"[{name_method}] execution time --- {time_stamp} seconds ---")
             except AttributeError:
-                self.info("[{}] execution time --- {} seconds ---".format(name_method,
-                                                                          (time.time() - start_time)))
+                self.info(f"[{name_method}] execution time --- {time_stamp} seconds ---")
             return method_result
         return method_wrapped
 
     @staticmethod
     def decorator_write_log_init_end_method(method):
+        """Decorator write when function starts and finish"""
         wraps(method)
 
         def method_wrapped(self,
@@ -71,9 +74,9 @@ class Decorators:
             name_method = method.__name__.replace("_",
                                                   " ")
             try:
-                self.logger.info(f"[{name_method}] initialization of method {name_method}: STARTING")
+                self.logger.info(f"[{name_method}] init of method {name_method}: STARTING")
             except AttributeError:
-                self.info(f"[{name_method}] initialization of method {name_method}: STARTING")
+                self.info(f"[{name_method}] init of method {name_method}: STARTING")
 
             method_result = method(self,
                                    *args,
@@ -95,12 +98,13 @@ if __name__ == "__main__":
 
     @decorators_object.decorator_execution_time
     def add_values(*args):
+        """Sum values"""
         result_sum = 0
         for value_to_sum in args[1:]:
             result_sum += value_to_sum
         return result_sum
 
 
-    added = add_values(decorators_object.logger,
+    ADDED = add_values(decorators_object.logger,
                        5,
                        6)

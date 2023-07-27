@@ -7,7 +7,6 @@ import sys
 import os
 import datetime
 import logging
-import types
 
 from typing import Optional
 
@@ -24,7 +23,8 @@ class Logger:
 
     Methods
     -------
-        - create_logger_file(log_name: str, process_name: str, create_directory: Optional[bool] = False):
+        - create_logger_file(log_name: str, process_name: str,
+        create_directory: Optional[bool] = False):
         Allow create logger file from class object.
     """
 
@@ -40,15 +40,15 @@ class Logger:
             :param log_name: The name of logger file.
             :type log_name: str
         """
-        __WORK_DIR = os.path.abspath(os.path.dirname(__file__))
-        __COMMON_DIR = os.path.abspath(os.path.join(__WORK_DIR,
+        __work_dir = os.path.abspath(os.path.dirname(__file__))
+        __common_dir = os.path.abspath(os.path.join(__work_dir,
                                                     '..'))
         # set paths
-        sys.path.append(__WORK_DIR)
-        sys.path.append(__COMMON_DIR)
+        sys.path.append(__work_dir)
+        sys.path.append(__common_dir)
 
         # filename log, to create log
-        self.__directory_log = __COMMON_DIR + "/logs"
+        self.__directory_log = __common_dir + "/logs"
         self.filename_log = self.__directory_log + f"/{log_name}.log"
 
     def create_logger_file(self,
@@ -81,17 +81,20 @@ class Logger:
         # create logger file
         try:
             logging.basicConfig(filename=self.filename_log,
-                                format='%(asctime)s p%(process)s {%(pathname)s:%(lineno)d}  -- %(levelname)s:  %('
+                                format='%(asctime)s p%(process)s {%(pathname)s:%(lineno)d} '
+                                       ' -- %(levelname)s:  %('
                                        'message)s',
                                 level=logging.INFO)
         except Exception as err:
             print(err)
             os.mkdir(self.__directory_log)
             logging.basicConfig(filename=self.filename_log,
-                                format='%(asctime)s p%(process)s {%(pathname)s:%(lineno)d}  -- %(levelname)s:  %('
+                                format='%(asctime)s p%(process)s {%(pathname)s:%(lineno)d} '
+                                       ' -- %(levelname)s:  %('
                                        'message)s',
                                 level=logging.INFO)
         logging.info(
-            f"\n\n starting {process_name} process date {datetime.datetime.now().date()}\n========================="
+            f"\n\n starting {process_name} process date "
+            f"{datetime.datetime.now().date()}\n========================="
             f"=====================================================================\n\n")
         return logging

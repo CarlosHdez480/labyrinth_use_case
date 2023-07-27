@@ -4,7 +4,7 @@ import copy
 from typing import Optional
 
 from src.decorators import Decorators
-from src.Logger import Logger
+from src.logger import Logger
 
 
 class GenerateLabyrinth:

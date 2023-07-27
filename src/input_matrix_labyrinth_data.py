@@ -1,9 +1,9 @@
 import time
 
 from src.decorators import Decorators
-from src.Logger import Logger
-from src.ReadData import ReadData
-from src.QuestionsUsers import QuestionsUsers
+from src.logger import Logger
+from src.read_data import ReadData
+from src.questions_users import QuestionsUsers
 from src.generate_labyrinth import GenerateLabyrinth
 
 
