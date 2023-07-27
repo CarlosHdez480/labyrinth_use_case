@@ -45,7 +45,21 @@ class ReadData:
     @Decorators.decorator_write_log_init_end_method
     def read_matrix_from_txt_file(self,
                                   filename: str,
-                                  folder: str):
+                                  folder: str) -> list:
+        """
+        read matrix from txt.
+
+        ...
+
+        Parameters
+        ----------
+            :param filename: file name where matrix it is in.
+            :type filename: str
+            :param folder: folder where search file.
+            :type folder: str
+            :return: a matrix with labyrinth.
+            :rtype: list
+        """
         try:
             with open(f"{self.__common_dir}/{folder}/" + filename) as f:
                 labyrinth_matrix = [x.rstrip("\n").split(" ") for x in f.readlines()]
