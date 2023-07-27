@@ -1,3 +1,4 @@
+"""Module to generate labyrinth"""
 import random
 import copy
 
@@ -20,7 +21,8 @@ class GenerateLabyrinth:
     Methods
     -------
         - create_labyrinth(dimensions: list, base_element_not_obstacle: Optional[str] = ".",
-        base_element_obstacle: Optional[str] = "#", probability_find_obstacle: Optional[float] = 0.75):
+        base_element_obstacle: Optional[str] = "#",
+        probability_find_obstacle: Optional[float] = 0.75):
         create labyrinth initial matrix.
     """
 
@@ -88,9 +90,9 @@ class GenerateLabyrinth:
                                        dimension_y: int,
                                        base_element_not_obstacle) -> list:
         base_matrix_labyrinth = []
-        for element_in_y_dimension in range(dimension_y):
+        for _ in range(dimension_y):
             row = []
-            for element_in_x_dimension in range(dimension_x):
+            for _ in range(dimension_x):
                 row.append(base_element_not_obstacle)
             base_matrix_labyrinth.append(row)
         return base_matrix_labyrinth

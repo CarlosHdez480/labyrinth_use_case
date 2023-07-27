@@ -77,9 +77,11 @@ class InputMatrixLabyrinthData:
     @Decorators.decorator_write_log_init_end_method
     def __option_selected_first_from_file(self) -> tuple:
         object_reader = ReadData(self.logger)
+        folder_to_search_file = "input"
 
         file = self.object_questions.question_file_name()
-        labyrinth_matrix = object_reader.read_txt_file(file)
+        labyrinth_matrix = object_reader.read_matrix_from_txt_file(file,
+                                                                   folder_to_search_file)
 
         if not labyrinth_matrix:
             raise Exception("error reading file, please enter file in input folder in txt format and with format of "
