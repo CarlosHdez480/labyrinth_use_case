@@ -1,10 +1,10 @@
 import time
 
-from src.Decorators import Decorators
+from src.decorators import Decorators
 from src.Logger import Logger
 from src.ReadData import ReadData
 from src.QuestionsUsers import QuestionsUsers
-from src.GenerateLabyrinth import GenerateLabyrinth
+from src.generate_labyrinth import GenerateLabyrinth
 
 
 class InputMatrixLabyrinthData:

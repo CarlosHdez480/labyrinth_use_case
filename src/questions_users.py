@@ -1,7 +1,7 @@
 import os
 
-from src.Decorators import Decorators
-from src.Logger import Logger
+from src.decorators import Decorators
+from src.logger import Logger
 
 
 class QuestionsUsers:

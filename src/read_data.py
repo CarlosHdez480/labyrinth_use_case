@@ -1,4 +1,4 @@
-from src.Logger import Logger
+from src.logger import Logger
 
 
 class ReadData:

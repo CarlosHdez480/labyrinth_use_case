@@ -3,7 +3,7 @@ import copy
 
 from typing import Optional
 
-from src.Decorators import Decorators
+from src.decorators import Decorators
 from src.Logger import Logger
 
 
