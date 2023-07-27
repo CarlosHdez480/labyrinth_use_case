@@ -3,7 +3,7 @@
 import os
 
 from src.logger import Logger
-
+from src.decorators import Decorators
 
 class ReadData:
     """
@@ -41,6 +41,7 @@ class ReadData:
         self.__common_dir = os.path.abspath(os.path.join(__work_dir,
                                                          '..'))
 
+    @Decorators.decorator_write_log_init_end_method
     def read_matrix_from_txt_file(self,
                                   filename: str,
                                   folder: str):
