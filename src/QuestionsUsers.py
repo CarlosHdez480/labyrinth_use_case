@@ -1,3 +1,5 @@
+import os
+
 from src.Decorators import Decorators
 from src.Logger import Logger
 
@@ -121,7 +123,7 @@ class QuestionsUsers:
         while True:
             option_chosen = input("\n\nInit labyrinth (select an option):"
                                   "\n- 1. from file \n- 2. directly here"
-                                  "\n- 3. automatic generation\n\nChosen option:")
+                                  "\n- 3. automatic generation\n\nChosen option:\n")
             msg_error = "\n\nIncorrect option, please enter only numeric values, [1, 2 or 3, amongst options]"
             try:
                 option_chosen_int = int(option_chosen)
@@ -133,3 +135,28 @@ class QuestionsUsers:
                 self.logger.warning(f"[initial question user method input labyrinth] incorrect question option, "
                                     f"error : {err}")
                 print(msg_error)
+
+    @Decorators.decorator_write_log_init_end_method
+    def question_file_name(self) -> str:
+        while True:
+            file_name = input("\n\nIndicate file name [file has to be in 'input' folder, txt format, see example,"
+                              "'example_labyrinth.txt': \n")
+            msg_error = "\n\nFile not found, indicate properly file name in input folder with txt format"
+            try:
+                file_name_searched_in_input_folder = [file for file in os.listdir("input/")
+                                                      if file_name in file and ".txt" in file][0]
+                return file_name_searched_in_input_folder
+            except IndexError as err:
+                self.logger.warning(
+                    f"[question file name] not found file, "
+                    f"error : {err}")
+                print(msg_error)
+
+    @Decorators.decorator_write_log_init_end_method
+    def question_symbols_on_file(self) -> tuple:
+        symbol_obstacle = input("\n\nIndicate obstacle symbol in your file"
+                                " [for example, in example file 1 it´s wall-obstacle]: \n")
+
+        symbol_space = input("\n\nIndicate space corridors symbol in your file"
+                             " [for example, in example file 0 it´s space-corridors]: \n")
+        return symbol_space, symbol_obstacle
