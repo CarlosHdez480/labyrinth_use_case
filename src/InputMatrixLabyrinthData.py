@@ -1,3 +1,5 @@
+import time
+
 from src.Decorators import Decorators
 from src.Logger import Logger
 from src.ReadData import ReadData
@@ -39,7 +41,7 @@ class InputMatrixLabyrinthData:
         self.object_questions = QuestionsUsers(self.logger)
 
     @Decorators.decorator_write_log_init_end_method
-    def get_matrix_asking_user(self):
+    def get_matrix_asking_user(self) -> tuple:
         """
         Create base labyrinth matrix asking user ways to input data, labyrinth itself.
 
@@ -47,21 +49,21 @@ class InputMatrixLabyrinthData:
 
         Parameters
         ----------
-            :return: matrix with labyrinth created from source indicated by user.
+            :return: matrix and symbols in matrix with labyrinth created from source indicated by user.
             :rtype: list
         """
         option_user_select = self.__input_option_question()
-        matrix, symbol_space, symbol_obstacle = self.__evaluate_option_selection_operator_input_and_return_matrix(option_user_select)
+        matrix, symbol_space, symbol_obstacle = self.__evaluate_option_user_selection_input(option_user_select)
         return matrix, symbol_space, symbol_obstacle
 
     @Decorators.decorator_write_log_init_end_method
-    def __input_option_question(self):
+    def __input_option_question(self) -> int:
         option_chosen = self.object_questions.initial_question_user_method_input_labyrinth()
         return option_chosen
 
     @Decorators.decorator_write_log_init_end_method
-    def __evaluate_option_selection_operator_input_and_return_matrix(self,
-                                                                     option_selected: str):
+    def __evaluate_option_user_selection_input(self,
+                                               option_selected: int) -> tuple:
         if option_selected == 1:
             base_labyrinth, symbol_space, symbol_obstacle = self.__option_selected_first_from_file()
             return base_labyrinth, symbol_space, symbol_obstacle
@@ -71,12 +73,32 @@ class InputMatrixLabyrinthData:
         elif option_selected == 3:
             base_labyrinth, symbol_space, symbol_obstacle = self.__option_selected_third_created_inside()
             return base_labyrinth, symbol_space, symbol_obstacle
-        else:
-            self.logger.error("matrix not generation possible, it failed entry options")
-            return [[]]
 
     @Decorators.decorator_write_log_init_end_method
-    def __option_selected_third_created_inside(self):
+    def __option_selected_first_from_file(self) -> tuple:
+        object_reader = ReadData(self.logger)
+
+        file = self.object_questions.question_file_name()
+        labyrinth_matrix = object_reader.read_txt_file(file)
+
+        if not labyrinth_matrix:
+            raise Exception("error reading file, please enter file in input folder in txt format and with format of "
+                            "example_labyrinth.txt")
+        else:
+            space_symbol, obstacle_symbol = self.object_questions.question_symbols_on_file_or_list("file")
+            return labyrinth_matrix, space_symbol, obstacle_symbol
+
+    @Decorators.decorator_write_log_init_end_method
+    def __option_selected_second_from_direct_list(self) -> tuple:
+        labyrinth_matrix = self.object_questions.question_direct_list()
+        if not labyrinth_matrix:
+            raise Exception("error reading direct list, please enter, matrix list format [[0, 1, 0],[1, 0, 0]]")
+        else:
+            space_symbol, obstacle_symbol = self.object_questions.question_symbols_on_file_or_list("direct list")
+            return labyrinth_matrix, space_symbol, obstacle_symbol
+
+    @Decorators.decorator_write_log_init_end_method
+    def __option_selected_third_created_inside(self) -> tuple:
         object_generator_labyrinth = GenerateLabyrinth(self.logger)
 
         dimensions = self.object_questions.question_matrix_dimensions()
@@ -91,22 +113,3 @@ class InputMatrixLabyrinthData:
                                                                        probability,
                                                                        )
         return labyrinth_matrix, symbol_corridors, symbol_obstacles
-
-    @Decorators.decorator_write_log_init_end_method
-    def __option_selected_first_from_file(self):
-        object_reader = ReadData(self.logger)
-
-        file = self.object_questions.question_file_name()
-        labyrinth_matrix = object_reader.read_txt_file(file)
-
-        if not labyrinth_matrix:
-            raise Exception("error reading file, please enter file in input folder in txt format and with format of "
-                            "example_labyrinth.txt")
-        else:
-            space_symbol, obstacle_symbol = self.object_questions.question_symbols_on_file()
-            return labyrinth_matrix, space_symbol, obstacle_symbol
-
-    @Decorators.decorator_write_log_init_end_method
-    def __option_selected_second_from_direct_list(self):
-        file = self.object_questions.question_file_name()
-        pass

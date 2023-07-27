@@ -153,10 +153,39 @@ class QuestionsUsers:
                 print(msg_error)
 
     @Decorators.decorator_write_log_init_end_method
-    def question_symbols_on_file(self) -> tuple:
-        symbol_obstacle = input("\n\nIndicate obstacle symbol in your file"
+    def question_symbols_on_file_or_list(self,
+                                         format_input) -> tuple:
+        symbol_space = input(f"\n\nIndicate space corridors symbol in your {format_input}"
+                             " [for example, in example file 0 it´s space-corridors]: \n")
+
+        symbol_obstacle = input(f"\n\nIndicate obstacle symbol in your {format_input}"
                                 " [for example, in example file 1 it´s wall-obstacle]: \n")
 
-        symbol_space = input("\n\nIndicate space corridors symbol in your file"
-                             " [for example, in example file 0 it´s space-corridors]: \n")
         return symbol_space, symbol_obstacle
+
+    @Decorators.decorator_write_log_init_end_method
+    def question_direct_list(self) -> list:
+        while True:
+            matrix = input("\n\nIndicate direct list [see example,"
+                           "[[0, 1, 0],[1, 0, 0]]: \n")
+            msg_error = "\n\nlist not properly indicated [see example, " \
+                        "[[0, 1, 0],[1, 0, 0]]: \n"
+            try:
+                dimension_y = matrix.count("[") - 1
+                dimension_x = len(
+                    [element.replace("]", "") for element in matrix.split("[") if len(element) >= 1][0].split(",")) - 1
+
+                matrix = [element.split(",") for element in [element.replace("]", "") for element in matrix.split("[")
+                                                             if len(element) >= 1] if element.split(",") != '  ']
+                base_matrix_labyrinth = []
+                for element_in_y_dimension in range(dimension_y):
+                    row = []
+                    for element_in_x_dimension in range(dimension_x):
+                        row.append(str(matrix[element_in_y_dimension][element_in_x_dimension].replace("'", "").strip()))
+                    base_matrix_labyrinth.append(row)
+                return base_matrix_labyrinth
+            except Exception as err:
+                self.logger.warning(
+                    f"[question direct list] not properly indicated list, "
+                    f"error : {err}")
+                print(msg_error)
