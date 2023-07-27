@@ -1,10 +1,7 @@
 ## Maze Solver
 
-
---
-
 Maze solver development.
---
+
 
 ## Scripts available
 
