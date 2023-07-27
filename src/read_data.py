@@ -5,6 +5,7 @@ import os
 from src.logger import Logger
 from src.decorators import Decorators
 
+
 class ReadData:
     """
         Read files.
